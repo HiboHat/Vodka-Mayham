@@ -16,8 +16,6 @@ public class SpriteLibrary : MonoBehaviour
     {
         foreach (ObjectSprite sprite in _sprites)
             objectSpriteList.Add(sprite);
-        
-        Debug.Log("INIT!!");
     }
 
     public static Sprite Get(string _name) 

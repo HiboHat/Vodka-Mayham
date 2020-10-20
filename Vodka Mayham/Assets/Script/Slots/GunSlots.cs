@@ -8,19 +8,31 @@ public class GunSlots : MonoBehaviour
     private Weapon noWeapon = new Fist();
     public Weapon equippedWeapon { get; private set; } = new TestGun(-1);
 
-    public void SwapWeapon(Weapon weapon)
+    public Weapon[] weaponslots = new Weapon[4];
+
+    public void SwapWeapon(int weapon)
     {
-        equippedWeapon = weapon;
-        gunRenderer.sprite = SpriteLibrary.Get(equippedWeapon.weaponSprite);
+        if (weapon <= 3 && weapon >= 0) 
+        {
+            equippedWeapon = weaponslots[weapon];
+            gunRenderer.sprite = SpriteLibrary.Get(equippedWeapon.weaponSprite);
+        }
     }
 
     void Start()
     {
+        weaponslots[0] = new TestGun(-1);
+        weaponslots[1] = new Fist();
+        weaponslots[2] = new Fist();
+        weaponslots[3] = new Fist();
+
+        equippedWeapon = noWeapon;
         gunRenderer.sprite = SpriteLibrary.Get(equippedWeapon.weaponSprite);
     }
 
     void Update()
     {
-        
+        if (equippedWeapon.currentFireRate <= equippedWeapon.fireRate) 
+            equippedWeapon.currentFireRate += Time.deltaTime;
     }
 }

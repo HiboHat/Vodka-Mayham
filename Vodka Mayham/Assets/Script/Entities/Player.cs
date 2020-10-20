@@ -3,7 +3,7 @@ using Armor;
 using Weapons;
 
 [System.Serializable]
-public class Player : IEntity
+public class Player : Entity
 {
     [SerializeField] private ArmorSlots armorSlots = null;
     [SerializeField] private GunSlots gunSlots = null;
@@ -17,7 +17,7 @@ public class Player : IEntity
 
     public void Fire()
     {
-        gunSlots.equippedWeapon.Shoot();
+        gunSlots.equippedWeapon.Shoot(transform, LayerMask.GetMask("Player") >> 8);
     }
     public void OnDeath()
     {

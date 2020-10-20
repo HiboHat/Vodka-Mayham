@@ -18,7 +18,7 @@ public class InputListener : MonoBehaviour, InputLibrary.IPlayerActions
         playerActions.SetCallbacks(this);
     }
 
-    public void Update() 
+    public void FixedUpdate() 
     {
         movement.Move(currentXDirection);
     }
@@ -59,21 +59,23 @@ public class InputListener : MonoBehaviour, InputLibrary.IPlayerActions
 
     public void OnWeaponSlot1(InputAction.CallbackContext context)
     {
-        player.GetGunSlots().SwapWeapon(new Weapons.TestGun(-1));
+        player.GetGunSlots().SwapWeapon(0);
     }
 
     public void OnWeaponSlot2(InputAction.CallbackContext context)
     {
-        player.GetGunSlots().SwapWeapon(new Fist());
+        player.GetGunSlots().SwapWeapon(1);
     }
 
     public void OnWeaponSlot3(InputAction.CallbackContext context)
     {
+        player.GetGunSlots().SwapWeapon(2);
 
     }
 
     public void OnWeaponSlot4(InputAction.CallbackContext context)
     {
+        player.GetGunSlots().SwapWeapon(3);
 
     }
 }

@@ -11,10 +11,12 @@ namespace Weapons
         public abstract int ammoCapacity { get; }
         public abstract float reloadTime { get; }
         public abstract bool needReloading { get; }
+        public abstract float fireRate { get; }
         public abstract string weaponSprite { get; }
-        public abstract void OnShooting();
+        public abstract void OnShooting(Transform _firepoint, int _layermask);
 
-        public int currentAmmoInClip { get; set; }
+        public int currentAmmoInClip { get; private set; }
+        public float currentFireRate { get; set; } = 0;
         public bool reloading { get; set; } = false;
 
         protected Weapon() 
@@ -29,13 +31,14 @@ namespace Weapons
                 currentAmmoInClip = _ammoInClip;
         }
 
-        public void Shoot() 
+        public void Shoot(Transform _firepoint, int _layermask = 2) 
         {
-            if (reloading)
+            if (reloading || currentFireRate < fireRate)
                 return;
 
             currentAmmoInClip--;
-            OnShooting();
+            currentFireRate = 0;
+            OnShooting(_firepoint, _layermask);
 
             if (currentAmmoInClip <= 0 && needReloading)
                 Reload();
