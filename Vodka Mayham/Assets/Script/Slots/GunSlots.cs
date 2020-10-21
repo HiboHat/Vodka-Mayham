@@ -4,6 +4,7 @@ using UnityEngine;
 public class GunSlots : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer gunRenderer = null;
+    [SerializeField] private Transform shootPoint = null;
 
     private Weapon noWeapon = new Fist();
     public Weapon equippedWeapon { get; private set; } = new TestGun(-1);
@@ -14,15 +15,26 @@ public class GunSlots : MonoBehaviour
     {
         if (weapon <= 3 && weapon >= 0) 
         {
+            if (equippedWeapon.reloading) 
+            {
+                Timer.StopTimer("ReloadTimer");
+                equippedWeapon.reloading = false;
+            }
             equippedWeapon = weaponslots[weapon];
             gunRenderer.sprite = SpriteLibrary.Get(equippedWeapon.weaponSprite);
+            shootPoint.localPosition = (Vector2)transform.localPosition + equippedWeapon.shootPoint;
         }
+    }
+
+    public Transform ShootPoint() 
+    {
+        return shootPoint;
     }
 
     void Start()
     {
-        weaponslots[0] = new TestGun(-1);
-        weaponslots[1] = new Fist();
+        weaponslots[0] = new TestRifle(-1);
+        weaponslots[1] = new TestGun(-1);
         weaponslots[2] = new Fist();
         weaponslots[3] = new Fist();
 

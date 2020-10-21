@@ -17,7 +17,7 @@ public class Player : Entity
 
     public void Fire()
     {
-        gunSlots.equippedWeapon.Shoot(transform, LayerMask.GetMask("Player") >> 8);
+        gunSlots.equippedWeapon.Shoot(gunSlots.ShootPoint(), LayerMask.GetMask("Player") >> 8);
     }
     public void OnDeath()
     {

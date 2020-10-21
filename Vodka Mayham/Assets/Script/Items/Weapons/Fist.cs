@@ -15,12 +15,16 @@ namespace Weapons
         public override float fireRate { get; } = 0.4f;
         public override bool needReloading { get; } = false;
         public override string weaponSprite { get; } = null;
-
+        public override Vector2 shootPoint { get; } = new Vector2(0, 0);
+        public override FireMode currentFireMode { get; set; } = FireMode.single;
 
         public override void OnShooting(Transform _firepoint, int _layermask)
         {
             Debug.Log($"PUNCH!");
         }
+
+        public override void ToggleFireMode(){}
+
         public Fist() { }
     }
 

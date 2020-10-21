@@ -81,6 +81,22 @@ public class @InputLibrary : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5ff2d92-080f-46bf-b473-db42f73c541f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ebfb1c39-8643-4852-92e0-2a250dd83ed1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -142,7 +158,7 @@ public class @InputLibrary : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""07c82000-42ac-48df-a9f8-dc8fbf14aa85"",
-                    ""path"": ""<Keyboard>/enter"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -193,6 +209,28 @@ public class @InputLibrary : IInputActionCollection, IDisposable
                     ""action"": ""WeaponSlot4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b57cbab9-a5a2-4000-8121-1c980efb1d57"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6d0e41d-4d02-4a92-8440-4eb4a5ee8088"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -209,6 +247,8 @@ public class @InputLibrary : IInputActionCollection, IDisposable
         m_Player_WeaponSlot2 = m_Player.FindAction("WeaponSlot2", throwIfNotFound: true);
         m_Player_WeaponSlot3 = m_Player.FindAction("WeaponSlot3", throwIfNotFound: true);
         m_Player_WeaponSlot4 = m_Player.FindAction("WeaponSlot4", throwIfNotFound: true);
+        m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
+        m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -266,6 +306,8 @@ public class @InputLibrary : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_WeaponSlot2;
     private readonly InputAction m_Player_WeaponSlot3;
     private readonly InputAction m_Player_WeaponSlot4;
+    private readonly InputAction m_Player_Reload;
+    private readonly InputAction m_Player_MousePosition;
     public struct PlayerActions
     {
         private @InputLibrary m_Wrapper;
@@ -278,6 +320,8 @@ public class @InputLibrary : IInputActionCollection, IDisposable
         public InputAction @WeaponSlot2 => m_Wrapper.m_Player_WeaponSlot2;
         public InputAction @WeaponSlot3 => m_Wrapper.m_Player_WeaponSlot3;
         public InputAction @WeaponSlot4 => m_Wrapper.m_Player_WeaponSlot4;
+        public InputAction @Reload => m_Wrapper.m_Player_Reload;
+        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -311,6 +355,12 @@ public class @InputLibrary : IInputActionCollection, IDisposable
                 @WeaponSlot4.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWeaponSlot4;
                 @WeaponSlot4.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWeaponSlot4;
                 @WeaponSlot4.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnWeaponSlot4;
+                @Reload.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReload;
+                @MousePosition.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
+                @MousePosition.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
+                @MousePosition.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -339,6 +389,12 @@ public class @InputLibrary : IInputActionCollection, IDisposable
                 @WeaponSlot4.started += instance.OnWeaponSlot4;
                 @WeaponSlot4.performed += instance.OnWeaponSlot4;
                 @WeaponSlot4.canceled += instance.OnWeaponSlot4;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
             }
         }
     }
@@ -353,5 +409,7 @@ public class @InputLibrary : IInputActionCollection, IDisposable
         void OnWeaponSlot2(InputAction.CallbackContext context);
         void OnWeaponSlot3(InputAction.CallbackContext context);
         void OnWeaponSlot4(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }
